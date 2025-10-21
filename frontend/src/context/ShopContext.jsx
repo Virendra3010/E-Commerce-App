@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useEffect } from "react";
+import { createContext } from "react";
 import { products } from "../assets/assets";
 import React, { useState } from 'react';
 import { toast } from "react-toastify";
