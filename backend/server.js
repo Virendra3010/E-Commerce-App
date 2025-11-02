@@ -8,14 +8,13 @@ import connectCloudinary from './config/cloudinary.js';
 const app = express();
 const port = process.env.PORT || 4000;
 connectDB();
-connectCloudinary
+connectCloudinary();
 
 // Middlewares
 app.use(express.json());
 app.use(cors());
 
 // API Endpoints
-
 app.get('/', (req, res) => {
     res.send('API working')
 })
