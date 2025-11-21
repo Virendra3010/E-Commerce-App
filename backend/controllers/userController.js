@@ -2,6 +2,7 @@ import validator from 'validator'
 import userModel from '../models/userModel.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import 'dotenv/config'
 
 const createToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET)
@@ -23,8 +24,8 @@ const loginUser = async (req, res) => {
         if (isMatch) {
             const token = createToken(user._id)
             res.json({ success: true, token })
-        }else{
-            res.json({success:false, message:"Invalid credentials"});
+        } else {
+            res.json({ success: false, message: "Invalid credentials" });
         }
 
     } catch (error) {
@@ -75,7 +76,19 @@ const registerUser = async (req, res) => {
 
 // Route for the admin user
 const adminLogin = async (req, res) => {
+    try {
+        const { email, password } = req.body;
 
+        if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
+            const token = jwt.sign(email + password, process.env.JWT_SECRET);
+            res.json({ sccess: true, token })
+        } else {
+            res.json({ success: false, message: "Invalid credentials" })
+        }
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: error.message })
+    }
 }
 
 export { loginUser, registerUser, adminLogin }
